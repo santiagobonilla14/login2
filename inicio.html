@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block header %} 
+<h1> {% block title %} listado de hechos {% endblock %}</h1>
+{% endblock %}
+{% block action%}
+<a class="button" href="{{url_for('inicial.registro')}}">REGISTRARSE</a>
+<a class="button" href="{{url_for('inicial.login')}}">INICIAR SESION</a>
+{% endblock %}
+{% block content %}
+<div>
+    <a class="button-h" href="link">Crear nuevo hecho</a>
+    </div>
+{% endblock %}
