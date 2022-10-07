@@ -15,3 +15,7 @@ def login():
 @bp.route ('/registro', methods=['GET'])
 def registro():
    return render_template('login/registro.html')
+
+@bp.route ('/crear', methods=['GET'])
+def crear():
+   return render_template('login/crear.html')
