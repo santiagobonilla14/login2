@@ -10,12 +10,33 @@ def inicial():
 
 @bp.route ('/login', methods=['GET'])
 def login():
-   return render_template('login/login.html')
+  return render_template('login/login.html')
 
-@bp.route ('/registro', methods=['GET'])
+@bp.route ('/registro', methods=['GET','POST'])
 def registro():
+   if request.method == 'POST':
+         usuario = request.form.get('usuario')
+         password = request.form.get('password')
+         errors =[]
+
+         if not usuario:
+            errors.append('digitar usuario')
+         if not password :
+             errors.append('contraseña obligatoria')
+
+         if len(errors) == 0:
+            db, c = get_db()
+            c.execute("INSERT INTO usuario (user,password) VALUES (%s,%s)",(usuario,password))
+            db.commit()
+            return redirect(url_for('inicial.login'))
+         
+         else:
+            for error in errors:
+               flash(error) 
+
    return render_template('login/registro.html')
 
-@bp.route ('/crear', methods=['GET'])
+@bp.route ('/crear', methods=['GET','POST'])
+##optener datos desde el formulariio.
 def crear():
    return render_template('login/crear.html')
