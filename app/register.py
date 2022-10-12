@@ -37,6 +37,25 @@ def registro():
    return render_template('login/registro.html')
 
 @bp.route ('/crear', methods=['GET','POST'])
-##optener datos desde el formulariio.
 def crear():
+   if request.method=='POST':
+      hecho=request.form.get('hecho')
+      estado=request.form.get('estado')
+      errors = []
+
+      if not hecho:
+         errors.append('hecho es obligatorio')
+
+      if len(errors) == 0:
+         db, c = get_db()
+         c.execute("INSERT INTO hecho (hecho,estado) VALUES (%s,%s)", (hecho,estado))
+         db.commit()
+         return redirect(url_for('inicial.login'))
+
+
+         
+      else:
+         for error in errors:
+          flash(error)
+
    return render_template('login/crear.html')
