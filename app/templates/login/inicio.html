@@ -10,4 +10,13 @@
 <div>
     <a class="button-h" href="{{url_for('inicial.crear')}}">Crear nuevo hecho</a>
     </div>
+    <ul>
+    {% for hecho in hechos %}
+    <li class="listado">
+        <div>
+            <span class="hecho">{{hecho['hecho']}}</span>
+         </div>
+    </li>
+{% endfor %}
+</ul>
 {% endblock %}
