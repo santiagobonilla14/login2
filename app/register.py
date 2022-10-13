@@ -1,22 +1,47 @@
-from flask import(Blueprint, render_template, request, flash, redirect, url_for, current_app)
+from flask import(Blueprint, render_template, request, flash, redirect, url_for, current_app, session)
 from app.db import get_db
+from werkzeug.security import check_password_hash, generate_password_hash
+
 
 ##a donde quiero que me dirija la ruta inicial.
 bp = Blueprint('inicial', __name__, url_prefix="/")
 @bp.route ('/', methods=['GET'])
 def inicial():
-   return render_template('login/inicio.html')
+      db,c= get_db()
+      c.execute("SELECT * FROM hecho")
+      hechos=c.fetchall()
+
+      return render_template('login/inicio.html', hechos=hechos)
 
 
-@bp.route ('/login', methods=['GET'])
+@bp.route ('/login', methods=['GET','POST'])
 def login():
-  return render_template('login/login.html')
+   if request.method == 'POST':
+        usuario = request.form.get('usuario')
+        password = request.form.get('password')
+
+        error = None
+        
+
+        if usuario == None:
+            error = 'Nombre de usuario incorrecto'
+        elif not check_password_hash(usuario.password, password):
+            error = 'Contraseña incorrecta'
+
+        if error is None:
+            return redirect(url_for('crear.login'))
+        
+        flash(error)
+   
+   
+   return render_template('login/login.html')
 
 @bp.route ('/registro', methods=['GET','POST'])
 def registro():
    if request.method == 'POST':
          usuario = request.form.get('usuario')
          password = request.form.get('password')
+         password = generate_password_hash(password)
          errors =[]
 
          if not usuario:
@@ -50,7 +75,7 @@ def crear():
          db, c = get_db()
          c.execute("INSERT INTO hecho (hecho,estado) VALUES (%s,%s)", (hecho,estado))
          db.commit()
-         return redirect(url_for('inicial.login'))
+         return redirect(url_for('inicial.crear'))
 
 
          
