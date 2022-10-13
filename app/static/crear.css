@@ -1,0 +1,45 @@
+body {
+    background-color: aliceblue;
+    font-family: 'Overpass', sans-serif;
+    font-weight: normal;
+    font-size: 100%;
+    color: #1b262c;
+    margin: 0;
+
+
+}
+div {
+    flex-direction:column-reverse;
+
+    min-width: 380px;
+    max-width: 900px;
+    width: 90%;
+
+    background-color: #5f6769;
+
+    /*opacity: 0.50;
+    filter: alpha(opacity=50);*/
+
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+
+   
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+label {
+    flex-direction:column-reverse;
+  background-color: aqua;
+}
+
+textarea {
+    flex-direction:column-reverse;
+    margin: 5px;
+    width: 400px;
+    height: 40px;
+    padding: 5px;
+    resize:none
+    
+}
