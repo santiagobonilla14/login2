@@ -31,15 +31,44 @@ div {
 
 label {
     flex-direction:column-reverse;
-  background-color: aqua;
+    color: black;
+    text-shadow: 5px;
+    text-align: center;
 }
 
-textarea {
+input {
     flex-direction:column-reverse;
     margin: 5px;
     width: 400px;
     height: 40px;
     padding: 5px;
-    resize:none
-    
+    resize:none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    text-align: center;
+}
+
+.button{
+    font-size: 14px;
+    transition: baclground-color 0.5 ease ;
+    background-color: #60d6be;
+    color: #fff;
+    align-self: center;
+    padding: 10px 15px;
+    border-radius: 30px;
+    text-decoration: none;
+    border: none;
+}
+
+select {
+    border-radius: 15px;
+    background: #5f6769;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+
+
 }
