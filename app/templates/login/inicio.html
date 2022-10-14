@@ -1,22 +1,11 @@
 {% extends 'base.html' %}
 {% block header %} 
-<h1> {% block title %} listado de hechos {% endblock %}</h1>
 {% endblock %}
 {% block action%}
 <a class="button" href="{{url_for('inicial.registro')}}">REGISTRARSE</a>
 <a class="button" href="{{url_for('inicial.login')}}">INICIAR SESION</a>
 {% endblock %}
 {% block content %}
-<div>
-    <a class="button-h" href="{{url_for('inicial.crear')}}">Crear nuevo hecho</a>
-    </div>
-    <ul>
-    {% for hecho in hechos %}
-    <li class="listado">
-        <div>
-            <span class="hecho">{{hecho['hecho']}}</span>
-         </div>
-    </li>
-{% endfor %}
-</ul>
+<h3>para poder crear sus hechos y acceder al listado de estos por favor inicie sesión</h3>
+    
 {% endblock %}
