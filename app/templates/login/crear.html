@@ -20,17 +20,23 @@
                     <label for="hecho">hecho</label>
                     <input id="hecho" type="text" name="hecho" placeholder="ingrese un hecho" required>
                     
-                    
+                    <br>
                     <label for="estado">estado</label>
-                    <input id="estado" type="text" name="estado" placeholder="estado del hecho" required>
+                        <select id="estado" name="estado">
+                            <option value="value1">activo</option>
+                            <option value="value2" selected>inactivo</option>
+                        </select>
                     
-                    <button type="submit" title="Ingresar" name="Ingresar">Crear</button>
+                    <button class="button" type="submit" title="Ingresar" name="Ingresar">Crear</button>
                 </form>
                 
+            </div>
+            <div>
+                <a class="button" href="{{url_for('inicial.sesion')}}">volver</a>
+
             </div>
             </div>
         </div>
     </div>
     
 </body>
-</html>
