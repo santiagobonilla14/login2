@@ -1,27 +1,23 @@
-<!doctype html>
-<title> {% block title %}{% endblock %} - Todo list</title>
-<link rel="stylesheet" href="{{url_for('static' ,filename='style.css')}}">
+<!DOCTYPE html>
+<title>{% block title %} {% endblock %} HECHOS</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap" rel="stylesheet">
+
+
 <nav>
-    <h1>todo list</h1>
-    <ul>
-        {% if g.user %}
-         <li><span>{{ g.user['username']}}</span> </li>
-         <li> <a href="{{url_for('auth.logout')}}">cerrar sesion</a></li>
-        {% else %}
-         <li><a href="{{ url_for('auth.register')}}">registrarse</a></li>
-         <li><a href="{{ url_for('auth.login')}}">inicio de sesion</a></li>
-     
-        {% endif %}
-    </ul>
+hechos
 </nav>
-
 <section class="content">
+<div class="top-bar">
+{% block action %}
+{% endblock%}
+</div>
 <header>
-
-    {% block header %}{% endblock %}
+{% block header %}{% endblock %}
 </header>
-{% for message in get_flashed_messages() %}
-<div class="flash">{{ message }}</div>
-{% endfor %}
-{% block content %}{% endblock %}
+<br>
+{% block content %} {% endblock %}
+
 </section>
