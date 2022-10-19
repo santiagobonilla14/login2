@@ -1,17 +1,16 @@
+import functools
 from flask import(Blueprint, render_template, request, flash, redirect, url_for,session,g)
 from app.db import get_db
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
 ##a donde quiero que me dirija la ruta inicial.
-bp = Blueprint('inicial', __name__, url_prefix="/")
-@bp.route ('/', methods=['GET'])
-def inicial():
-      db,c= get_db()
-      c.execute("SELECT * FROM hecho")
-      hechos=c.fetchall()
+bp = Blueprint('inicial', __name__, url_prefix="/inicial")
 
-      return render_template('login/inicio.html', hechos=hechos)
+@bp.route ('/inicial', methods=['GET'])
+def inicial():
+    return render_template('login/inicio.html')
+
 
 @bp.route ('/registro', methods=['GET','POST'])
 def registro():
@@ -21,7 +20,7 @@ def registro():
          db, c= get_db()
          error=None
          c.execute(
-            'select id from usuario where user = %s', (usuario,)
+            'select id from usuario where username = %s', (usuario,)
          )
          if not usuario:
             error='username es requerido'
@@ -31,7 +30,7 @@ def registro():
             error='usuario {} se enncuentra registado.'.format(usuario)
          if error is None:
             c.execute(
-                'insert into usuario (user, password) values (%s, %s)',
+                'insert into usuario (username, password) values (%s, %s)',
                 (usuario, generate_password_hash(password))
             )
             db.commit()
@@ -50,7 +49,7 @@ def login():
         db, c= get_db()
         error = None
         c.execute(
-            'select * from usuario where user = %s',(usuario,) 
+            'select * from usuario where username = %s',(usuario,) 
         )
         usuario = c.fetchone()
 
@@ -62,50 +61,43 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = usuario['id']
-            return redirect(url_for('inicial.sesion'))
+            return redirect(url_for('todo.index'))
 
         flash(error)
    
     return render_template('login/login.html')
 
-@bp.route ('/sesion', methods=['GET','POST'])
-def sesion():
-   db,c= get_db()
-   c.execute("SELECT * FROM hecho")
-   hechos=c.fetchall()
-   return render_template ('login/sesion.html', hechos=hechos)
+### definiendo sesion unica.
+
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+   
+    if user_id is None:
+        g.user = None
+    else:
+        db,c=get_db()
+        c.execute(
+            'select * from usuario where id= %s',(user_id,)
+        )
+        g.user = c.fetchone()
 
 
-# @bp.before_app_request
-# def load_logged_in_user():
-#     user_id = session.get('user_id')
 
-#     if user_id is None:
-#         g.user = None
-#     else:
-#         db,c=get_db()
-#         c.execute(
-#             'select * from usuario where id= %s', (user_id,)
-#         )
-#         g.user = c.fetchone()
+def login_required(view): 
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('inicial.inicial'))
+        
+        return view (**kwargs)
 
+    return wrapped_view
 
-@bp.route ('/crear', methods=['GET','POST'])
-def crear():
-   if request.method=='POST':
-      hecho=request.form.get('hecho')
-      estado=request.form.get('estado')
-      estado=str(estado)
-      errors = []
-
-      if not hecho:
-         errors.append('hecho es obligatorio')
-
-      if len(errors) == 0:
-         db, c = get_db()
-         c.execute("INSERT INTO hecho (hecho,estado) VALUES (%s,%s)", (hecho,estado))
-         db.commit()
-         return redirect(url_for('inicial.crear'))
+@bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('inicial.inicial'))
 
 
          
