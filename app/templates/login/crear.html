@@ -4,7 +4,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet"> 
     
     <!-- Link hacia el archivo de estilos css -->
-    <link rel="stylesheet" href="static/crear.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='crear.css')}}">
     
   
     
@@ -32,7 +32,15 @@
                 
             </div>
             <div>
-                <a class="button" href="{{url_for('inicial.sesion')}}">volver</a>
+                <a class="button" href="{{url_for('todo.index')}}">volver</a>
+
+            </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
 
             </div>
             </div>
