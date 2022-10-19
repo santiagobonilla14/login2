@@ -45,3 +45,31 @@ nav{
     text-decoration: none;
     border: none;
 }
+.hecho{
+    color: black;
+}
+
+a {
+    font-size: 14px;
+    transition: baclground-color 0.5 ease ;
+    background-color: #4533b7;
+    color: #fff;
+    align-self: center;
+    padding: 10px 15px;
+    border-radius: 30px;
+    text-decoration: none;
+    border: none;
+}
+
+.danger{
+
+    font-size: 14px;
+    transition: baclground-color 0.5 ease ;
+    background-color: #c58428;
+    color: #fff;
+    align-self: center;
+    padding: 10px 15px;
+    border-radius: 30px;
+    text-decoration: none;
+    border: none;
+} 
