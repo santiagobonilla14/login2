@@ -98,11 +98,3 @@ def login_required(view):
 def logout():
     session.clear()
     return redirect(url_for('inicial.inicial'))
-
-
-         
-      else:
-         for error in errors:
-          flash(error)
-
-   return render_template('login/crear.html')
