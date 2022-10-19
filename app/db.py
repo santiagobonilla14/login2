@@ -13,7 +13,7 @@ def get_db():
             password=current_app.config['DATABASE_PASSWORD'],
             database=current_app.config['DATABASE'],
         )
-    g.c = g.db.cursor(dictionary=True)
+        g.c = g.db.cursor(dictionary=True)
     return g.db, g.c 
 
 ##cerrar la base de datos
@@ -40,3 +40,4 @@ def init_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db )
     app.cli.add_command(init_db_command)
+
