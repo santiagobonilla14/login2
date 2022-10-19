@@ -19,7 +19,9 @@ def create_app():
     #### importar el blue print
 
     from . import register
+    from . import todo
 
     app.register_blueprint(register.bp)
+    app.register_blueprint(todo.bp)
 
     return app
