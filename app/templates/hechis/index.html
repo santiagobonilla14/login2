@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %} 
+<h1>BIENVENIDO</h1>
+
+<a class="button" href="{{url_for('todo.crear')}}">Crear hecho</a>
+ 
+{% endblock %}
+<br>
+<br>
+{% block content %} 
+<ul>
+    {% for hecho in hechos %}
+    <li class="hecho">
+        <div>
+            <h1>
+            {% if hecho ['completed'] == 1 %}
+            <strong>{{ hecho ['hecho'] }}</strong>
+            {% else %}
+            {{ hecho ['hecho'] }}
+            {% endif %}
+            </h1>
+        </div>
+        <div>
+                <div class="about"> {{ hecho ['created_at'].strftime('%Y-%m-%d') }}</div>
+                <br>
+        
+                <a class="action" href="{{ url_for('todo.update', id= hecho['id'])}}">editar</a>
+
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+<br>
+<a class="button" href="{{url_for('inicial.logout')}}">cerrar sesión</a>
+{% endblock %}
